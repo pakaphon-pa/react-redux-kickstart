@@ -17,10 +17,12 @@ const ProductDetail = () => {
     console.log(response);
     dispatch(selectedProduct(response.data));
   }
+  // useEffect not use async for clean up
+  useEffect(() => {
+    requestOneProduct(productId);
+    return function cleanup() {
+      console.log("Profile page unmount");
 
-  useEffect(async () => {
-    await requestOneProduct(productId);
-    return async () => {
       dispatch(removeSelectedProduct());
     };
   }, [productId]);
